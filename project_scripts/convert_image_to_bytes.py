@@ -21,7 +21,7 @@ for image in images_list:
     image_bytes = (imencode('.jpg', image_cv2)[1].tobytes())
 
     # Имя выходного файла
-    output_file = f'{splitext(image)[0]}.txt'
+    output_file = f'{splitext(image)[0]}.bin'
 
     # Полный путь к выходному файлу
     output_path = os_join(f'{project_path}\\img_bytes', output_file)
