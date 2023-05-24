@@ -17,7 +17,7 @@ for image in images_list:
     # Загрузка изображения с помощью OpenCV
     image_cv2 = imread(image_path)
 
-    # Преобразование изображения в байтовый массив и вывод его в консоль
+    # Преобразование изображения в байтовый массив
     image_bytes = (imencode('.jpg', image_cv2)[1].tobytes())
 
     # Имя выходного файла
