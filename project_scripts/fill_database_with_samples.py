@@ -17,9 +17,28 @@ samples = [
         'country': 'USA',
         'phone_num': '123456789',
         'email': 'johndoe@example.com',
-        'photo': b'\x01\x02\x03\x04'  # Пример байтов фотографии
+        'photo': b'\x01\x02\x03\x04'
     },
-    # Добавьте другие образцы данных
+    {
+        'first_name': 'Павел',
+        'last_name': 'Дуров',
+        'patronymic': None,
+        'birthdate': '1990-01-01',
+        'country': 'USA',
+        'phone_num': '123456789',
+        'email': 'johndoe@example.com',
+        'photo': b'\x01\x02\x03\x04'
+    },
+    {
+        'first_name': 'Павел',
+        'last_name': 'Дуров',
+        'patronymic': None,
+        'birthdate': '1990-01-01',
+        'country': 'USA',
+        'phone_num': '123456789',
+        'email': 'johndoe@example.com',
+        'photo': b'\x01\x02\x03\x04'
+    }
 ]
 
 # Заполняем таблицу с использованием модели и сессии
