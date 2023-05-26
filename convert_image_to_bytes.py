@@ -6,7 +6,7 @@ from cv2 import imread, imencode
 
 def get_project_path():
     # Абсолютный путь проекта
-    return '\\'.join(dirname(__file__).split('\\')[:-1])
+    return '\\'.join(dirname(__file__).split('\\'))
 
 
 def convert_image_to_bytes(image_path):
