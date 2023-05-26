@@ -3,7 +3,8 @@ from src.personsModel import PersonsModel
 from convert_image_to_bytes import get_bytes_from_file
 
 # Создаем экземпляр класса DatabaseSession
-db_session = DatabaseSession('your_db_uri')
+db_session = DatabaseSession(
+    'postgresql://postgres:AHfGx9_rNaXgyAYZr@localhost:5432/person_search')
 
 # Получаем сессию из DatabaseSession
 session = db_session.get_session()
@@ -19,7 +20,27 @@ samples = [
         'phone_num': '+79155590507',
         'email': 'durov@mail.com',
         'photo': get_bytes_from_file('durov.bin')
-    }
+    },
+    {
+        'first_name': 'Gates',
+        'last_name': 'William',
+        'patronymic': None,
+        'birthdate': '1955-10-28',
+        'country': 'USA',
+        'phone_num': '+18332691066',
+        'email': 'gates@mail.com',
+        'photo': get_bytes_from_file('gates.bin')
+    },
+    {
+        'first_name': 'Mark',
+        'last_name': 'Zuckerberg',
+        'patronymic': None,
+        'birthdate': '1984-05-14',
+        'country': 'USA',
+        'phone_num': '+18332626819',
+        'email': 'zuckerberg@mail.com',
+        'photo': get_bytes_from_file('zuckerberg.bin')
+    },
 ]
 
 # Заполняем таблицу с использованием модели и сессии
