@@ -7,7 +7,7 @@ Base = declarative_base()
 class PersonsModel(Base):
     __tablename__ = 'persons'
 
-    id = Column(Integer, primary_key=True)
+    identifier = Column(Integer, primary_key=True)
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
     patronymic = Column(String(50))
