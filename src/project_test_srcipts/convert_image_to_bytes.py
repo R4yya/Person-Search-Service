@@ -5,7 +5,7 @@ from cv2 import imread, imencode
 
 
 def get_project_path():
-    # Абсолютный путь проекта
+    # Получаем абсолютный путь проекта
     return '\\'.join(dirname(__file__).split('\\')[:-1])
 
 
@@ -29,7 +29,7 @@ def get_bytes_from_file(file_name):
     with open(os_join(f'{get_project_path()}\\img_bytes', file_name), 'rb') as file:
         return file.read()
 
-
+# Абсолютный путь проекта
 project_path = get_project_path()
 
 # Получение списка изображений в папке
