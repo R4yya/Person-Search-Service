@@ -175,3 +175,5 @@ haar_cascades/haarcascade_frontalcatface_extended.xml
 haar_cascades/haarcascade_frontalface_alt.xml
 haar_cascades/haarcascade_frontalface_alt2.xml
 haar_cascades/haarcascade_frontalface_alt_tree.xml
+presonsearchenv/Scripts/face_recognition.exe
+presonsearchenv/Scripts/face_detection.exe
