@@ -2,9 +2,13 @@ from src.databaseSession import DatabaseSession
 from src.personsModel import PersonsModel
 from convert_image_to_bytes import get_bytes_from_file
 
+# Универсальный идентификатор ресурса
+username = input('username: ')
+password = input('password: ')
+uri = f'postgresql://{username}:{password}@localhost:5432/person_search'
+
 # Создаем экземпляр класса DatabaseSession
-db_session = DatabaseSession(
-    'postgresql://postgres:AHfGx9_rNaXgyAYZr@localhost:5432/person_search')
+db_session = DatabaseSession(uri)
 
 # Получаем сессию из DatabaseSession
 session = db_session.get_session()
