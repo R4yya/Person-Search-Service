@@ -175,6 +175,3 @@ haar_cascades/haarcascade_frontalcatface_extended.xml
 haar_cascades/haarcascade_frontalface_alt.xml
 haar_cascades/haarcascade_frontalface_alt2.xml
 haar_cascades/haarcascade_frontalface_alt_tree.xml
-convert_image_to_bytes.py
-fill_database_with_samples.py
-test_face_recognition.py
