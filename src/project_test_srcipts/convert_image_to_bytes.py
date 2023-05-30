@@ -6,7 +6,7 @@ from cv2 import imread, imencode
 
 def get_project_path():
     # Абсолютный путь проекта
-    return '\\'.join(dirname(__file__).split('\\'))
+    return '\\'.join(dirname(__file__).split('\\')[:-1])
 
 
 def convert_image_to_bytes(image_path):
@@ -30,13 +30,15 @@ def get_bytes_from_file(file_name):
         return file.read()
 
 
+project_path = get_project_path()
+
 # Получение списка изображений в папке
-images_list = listdir(f'{get_project_path()}\\img')
+images_list = listdir(f'{project_path}\\img')
 
 # Обход каждого изображения
 for image in images_list:
     # Полный путь к изображению
-    image_path = os_join(f'{get_project_path()}\\img', image)
+    image_path = os_join(f'{project_path}\\img', image)
 
     # Преобразование изображения в байтовый массив
     image_bytes = convert_image_to_bytes(image_path)
@@ -45,7 +47,7 @@ for image in images_list:
     output_file = f'{splitext(image)[0]}.bin'
 
     # Полный путь к выходному файлу
-    output_path = os_join(f'{get_project_path()}\\img_bytes', output_file)
+    output_path = os_join(f'{project_path}\\img_bytes', output_file)
 
     # Запись байтов в файл
     write_bytes_to_file(output_path, image_bytes)
