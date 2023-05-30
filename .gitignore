@@ -128,6 +128,21 @@ ENV/
 env.bak/
 venv.bak/
 
+# personsearchvenv
+presonsearchenv/Include/site/python3.10/greenlet/greenlet.h
+presonsearchenv/pyvenv.cfg
+presonsearchenv/Scripts/activate
+presonsearchenv/Scripts/activate.bat
+presonsearchenv/Scripts/Activate.ps1
+presonsearchenv/Scripts/deactivate.bat
+presonsearchenv/Scripts/pip.exe
+presonsearchenv/Scripts/pip3.10.exe
+presonsearchenv/Scripts/pip3.exe
+presonsearchenv/Scripts/python.exe
+presonsearchenv/Scripts/pythonw.exe
+presonsearchenv/Scripts/face_recognition.exe
+presonsearchenv/Scripts/face_detection.exe
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -158,22 +173,11 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-presonsearchenv/Include/site/python3.10/greenlet/greenlet.h
-presonsearchenv/pyvenv.cfg
-presonsearchenv/Scripts/activate
-presonsearchenv/Scripts/activate.bat
-presonsearchenv/Scripts/Activate.ps1
-presonsearchenv/Scripts/deactivate.bat
-presonsearchenv/Scripts/pip.exe
-presonsearchenv/Scripts/pip3.10.exe
-presonsearchenv/Scripts/pip3.exe
-presonsearchenv/Scripts/python.exe
-presonsearchenv/Scripts/pythonw.exe
+
+# haar_cascades xmls from cv2 data folder
 haar_cascades/haarcascade_frontalface_default.xml
 haar_cascades/haarcascade_frontalcatface.xml
 haar_cascades/haarcascade_frontalcatface_extended.xml
 haar_cascades/haarcascade_frontalface_alt.xml
 haar_cascades/haarcascade_frontalface_alt2.xml
 haar_cascades/haarcascade_frontalface_alt_tree.xml
-presonsearchenv/Scripts/face_recognition.exe
-presonsearchenv/Scripts/face_detection.exe
