@@ -26,6 +26,7 @@ def write_bytes_to_file(output_path, image_bytes):
 
 
 def get_bytes_from_file(file_name):
+    # Чтение байтов в файл
     with open(os_join(f'{get_project_path()}\\img_bytes', file_name), 'rb') as file:
         return file.read()
 
