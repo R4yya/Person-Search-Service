@@ -129,19 +129,7 @@ env.bak/
 venv.bak/
 
 # personsearchvenv
-presonsearchenv/Include/site/python3.10/greenlet/greenlet.h
-presonsearchenv/pyvenv.cfg
-presonsearchenv/Scripts/activate
-presonsearchenv/Scripts/activate.bat
-presonsearchenv/Scripts/Activate.ps1
-presonsearchenv/Scripts/deactivate.bat
-presonsearchenv/Scripts/pip.exe
-presonsearchenv/Scripts/pip3.10.exe
-presonsearchenv/Scripts/pip3.exe
-presonsearchenv/Scripts/python.exe
-presonsearchenv/Scripts/pythonw.exe
-presonsearchenv/Scripts/face_recognition.exe
-presonsearchenv/Scripts/face_detection.exe
+presonsearchenv/
 
 # Spyder project settings
 .spyderproject
