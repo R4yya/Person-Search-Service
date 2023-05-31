@@ -184,5 +184,7 @@ haar_cascades/haarcascade_frontalface_alt_tree.xml
 
 # test images
 img/test_random_3people.jpg
+img/test_me_1.jpg
+img/test_me_2.jpg
 
 # test images converted to bin
