@@ -2,46 +2,42 @@ import face_recognition
 import numpy as np
 from convert_image_to_bytes import get_project_path
 
-# Абсолютный путь проекта
+# Аbsolute path of the project
 project_path = get_project_path()
 
-# Загрузка изображений из jpg
-image1 = face_recognition.load_image_file(
-    f'{project_path}\\img\\test_me_1.jpg')
-image2 = face_recognition.load_image_file(
-    f'{project_path}\\img\\test_me_2.jpg')
+image_format = '.jpg'
 
-# Загрузка изображений из bin
-# image1 = face_recognition.load_image_file(
-#     f'{project_path}\\img_bytes\\test_durov_1.bin')
-# image2 = face_recognition.load_image_file(
-#     f'{project_path}\\img_bytes\\durov.bin')
+# Load image
+image_1 = face_recognition.load_image_file(
+    f'{project_path}\\img\\test_me_1{image_format}')
+image_2 = face_recognition.load_image_file(
+    f'{project_path}\\img\\test_me_2{image_format}')
 
-# Поиск лиц на изображениях
-face_locations1 = face_recognition.face_locations(image1)
-face_locations2 = face_recognition.face_locations(image2)
+# Search for faces in images
+face_locations_1 = face_recognition.face_locations(image_1)
+face_locations_2 = face_recognition.face_locations(image_2)
 
-# Получение признаков лиц
+# Get face encodings
 face_encoding1 = np.array(
-    face_recognition.face_encodings(image1, face_locations1))
+    face_recognition.face_encodings(image_1, face_locations_1))
 face_encoding2 = np.array(
-    face_recognition.face_encodings(image2, face_locations2))
+    face_recognition.face_encodings(image_2, face_locations_2))
 
-# Сравнение face embeddings
+# Compare face embeddings
 # results = face_recognition.compare_faces(face_encoding1, face_encoding2)
 
-# Вычисление расстояния между лицами
+# Calculate the distance between faces
 face_distance = face_recognition.face_distance(
     [face_encoding1], face_encoding2)[0]
 
-# Преобразование расстояния в процент уверенности
+# Convert distance to similarity score
 similarity_score = (1 - face_distance) * 100
 
-# Вывод результата
+# Print result
 # if any(results):
-#     print("Лица на изображениях сходятся")
+#     print("The faces in the images converge")
 # else:
-#     print("Лица на изображениях различаются")
+#     print("The faces in the images do not converge")
 
-# Вывод процента уверенности
+# Print similarity score
 print(f'Сходство {similarity_score:.2f}%')

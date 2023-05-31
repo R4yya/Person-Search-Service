@@ -3,18 +3,18 @@ from src.personsModel import PersonsModel
 from convert_image_to_bytes import get_bytes_from_file
 
 
-# Универсальный идентификатор ресурса
+# Set URI
 username = input('username: ')
 password = input('password: ')
 uri = f'postgresql://{username}:{password}@localhost:5432/person_search'
 
-# Создаем экземпляр класса DatabaseSession
+# Create an instance of the DatabaseSession
 db_session = DatabaseSession(uri)
 
-# Получаем сессию из DatabaseSession
+# Get session from DatabaseSession
 session = db_session.get_session()
 
-# Создаем образцы данных для заполнения таблицы
+# Create data samples to fill table
 samples = [
     {
         'first_name': 'Pavel',
@@ -48,13 +48,13 @@ samples = [
     },
 ]
 
-# Заполняем таблицу с использованием модели и сессии
+# Fill table using model and session
 for sample in samples:
     person = PersonsModel(**sample)
     session.add(person)
 
-# Выполняем коммит, чтобы сохранить данные в базе данных
+# Perform a commit to save the data in database
 session.commit()
 
-# Закрываем сессию
+# End session
 session.close()
