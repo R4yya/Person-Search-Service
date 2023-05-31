@@ -128,7 +128,7 @@ ENV/
 env.bak/
 venv.bak/
 
-# personsearchvenv
+# Personsearchvenv
 presonsearchenv/
 
 # Spyder project settings
@@ -162,11 +162,11 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# haar_cascades xmls from cv2 data folder
+# Haar cascades xmls from cv2 data folder
 haar_cascades/
 
-# test images
+# Test images
 img/test_*.jpg
 
-# test images converted to bin
+# Test images converted to bin
 img_bytes/test_*.bin
