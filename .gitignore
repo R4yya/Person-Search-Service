@@ -163,18 +163,10 @@ cython_debug/
 #.idea/
 
 # haar_cascades xmls from cv2 data folder
-haar_cascades/haarcascade_frontalface_default.xml
-haar_cascades/haarcascade_frontalcatface.xml
-haar_cascades/haarcascade_frontalcatface_extended.xml
-haar_cascades/haarcascade_frontalface_alt.xml
-haar_cascades/haarcascade_frontalface_alt2.xml
-haar_cascades/haarcascade_frontalface_alt_tree.xml
+haar_cascades/
 
 # test images
-img/test_random_3people.jpg
-img/test_me_1.jpg
-img/test_me_2.jpg
-img/test_durov_1.jpg
+img/test_*.jpg
 
 # test images converted to bin
-img_bytes/test_durov_1.bin
+img_bytes/test_*.bin
