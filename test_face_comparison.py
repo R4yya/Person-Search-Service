@@ -9,9 +9,9 @@ image_format = '.jpg'
 
 # Load image
 image_1 = face_recognition.load_image_file(
-    f'{project_path}\\img\\test_me_1{image_format}')
-image_2 = face_recognition.load_image_file(
     f'{project_path}\\img\\test_me_2{image_format}')
+image_2 = face_recognition.load_image_file(
+    f'{project_path}\\img\\test_me_3{image_format}')
 
 # Search for faces in images
 face_locations_1 = face_recognition.face_locations(image_1)
@@ -27,11 +27,14 @@ face_encoding2 = np.array(
 # results = face_recognition.compare_faces(face_encoding1, face_encoding2)
 
 # Calculate the distance between faces
-face_distance = face_recognition.face_distance(
+face_distances = face_recognition.face_distance(
     [face_encoding1], face_encoding2)[0]
 
+# Calculate median of face_distances array
+median_face_distance = np.median(face_distances)
+
 # Convert distance to similarity score
-similarity_score = (1 - face_distance) * 100
+similarity_score = (1 - median_face_distance) * 100
 
 # Print result
 # if any(results):
@@ -40,4 +43,4 @@ similarity_score = (1 - face_distance) * 100
 #     print("The faces in the images do not converge")
 
 # Print similarity score
-print(f'Сходство {similarity_score:.2f}%')
+print(f'Similarity is {similarity_score:.2f}%')
