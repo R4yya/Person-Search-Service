@@ -1,46 +1,111 @@
 import face_recognition
 import numpy as np
 from convert_image_to_bytes import get_project_path
+from timeit import timeit
 
-# Аbsolute path of the project
-project_path = get_project_path()
 
-image_format = '.jpg'
+def load_images(image_format='.jpg'):
+    # Аbsolute path of the project
+    project_path = get_project_path()
 
-# Load image
-image_1 = face_recognition.load_image_file(
-    f'{project_path}\\img\\test_me_2{image_format}')
-image_2 = face_recognition.load_image_file(
-    f'{project_path}\\img\\test_me_3{image_format}')
+    # Load image
+    image_1 = face_recognition.load_image_file(
+        f'{project_path}\\img\\test_me_2{image_format}')
+    image_2 = face_recognition.load_image_file(
+        f'{project_path}\\img\\test_me_3{image_format}')
 
-# Search for faces in images
-face_locations_1 = face_recognition.face_locations(image_1)
-face_locations_2 = face_recognition.face_locations(image_2)
+    return image_1, image_2
 
-# Get face encodings
-face_encoding1 = np.array(
-    face_recognition.face_encodings(image_1, face_locations_1))
-face_encoding2 = np.array(
-    face_recognition.face_encodings(image_2, face_locations_2))
 
-# Compare face embeddings
-# results = face_recognition.compare_faces(face_encoding1, face_encoding2)
+def get_face_encodings(image_1, image_2):
+    # Search for faces in images
+    face_locations_1 = face_recognition.face_locations(image_1)
+    face_locations_2 = face_recognition.face_locations(image_2)
 
-# Calculate the distance between faces
-face_distances = face_recognition.face_distance(
-    [face_encoding1], face_encoding2)[0]
+    # Get face encodings
+    face_encoding_1 = np.array(
+        face_recognition.face_encodings(image_1, face_locations_1))
+    face_encoding_2 = np.array(
+        face_recognition.face_encodings(image_2, face_locations_2))
 
-# Calculate median of face_distances array
-median_face_distance = np.median(face_distances)
+    return face_encoding_1, face_encoding_2
 
-# Convert distance to similarity score
-similarity_score = (1 - median_face_distance) * 100
 
-# Print result
-# if any(results):
-#     print("The faces in the images converge")
-# else:
-#     print("The faces in the images do not converge")
+def compare_faces(face_encoding_1, face_encoding_2):
+    # Compare face embeddings
+    comparison_result = face_recognition.compare_faces(
+        face_encoding_1, face_encoding_2)
 
-# Print similarity score
-print(f'Similarity is {similarity_score:.2f}%')
+    return comparison_result
+
+
+def get_face_distances(face_encoding_1, face_encoding_2):
+    # Calculate the distance between faces
+    face_distances = face_recognition.face_distance(
+        [face_encoding_1], face_encoding_2)[0]
+
+    return face_distances
+
+
+def get_median(face_distances):
+    # Calculate median of face_distances array
+    median_face_distance = np.median(face_distances)
+
+    return (1 - median_face_distance) * 100
+
+
+def get_mean(face_distances):
+    # Calculate arithmetic mean
+    mean_face_distance = np.mean(face_distances)
+
+    return (1 - mean_face_distance) * 100
+
+
+if __name__ == '__main__':
+    # Load images get face encodings and distances
+    image_1, image_2 = load_images()
+    face_encoding_1, face_encoding_2 = get_face_encodings(image_1, image_2)
+    face_distances = get_face_distances(face_encoding_1, face_encoding_2)
+
+    # Print comparison result
+    # comparison_result = compare_faces(face_encoding_1, face_encoding_2)
+    # if any(comparison_result):
+    #     print("The faces in the images converge")
+    # else:
+    #     print("The faces in the images do not converge")
+
+    # Testing aggregation methods and their execution time
+    # 1. Median
+    similarity_score_median = get_median(face_distances)
+
+    execution_time = timeit(lambda: get_median(face_distances), number=10)
+
+    print(f'Similarity is {similarity_score_median:.2f}%')
+    print(f'Execution time: {execution_time} seconds')
+
+    # 2.Arithmetic mean
+    similarity_score_mean = get_mean(face_distances)
+
+    execution_time = timeit(lambda: get_mean(face_distances), number=10)
+
+    print(f'Similarity is {similarity_score_mean:.2f}%')
+    print(f'Execution time: {execution_time} seconds')
+
+    # 3.Manhattan distance
+
+
+    # 4.Euclidean distance
+
+
+    # 5.Cosine distance
+
+
+    # 6.Pearson Correlation Coefficient
+
+
+    # 7.Histogram similarity
+
+
+    # 8.Support Vector Machine, SVM
+
+    
