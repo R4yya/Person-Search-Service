@@ -49,16 +49,23 @@ def get_face_distances(face_encoding_1, face_encoding_2):
 
 def get_median(face_distances):
     # Calculate median of face_distances array
-    median_face_distance = np.median(face_distances)
+    median = np.median(face_distances)
 
-    return (1 - median_face_distance) * 100
+    return (1 - median) * 100
 
 
 def get_mean(face_distances):
     # Calculate arithmetic mean
-    mean_face_distance = np.mean(face_distances)
+    mean = np.mean(face_distances)
 
-    return (1 - mean_face_distance) * 100
+    return (1 - mean) * 100
+
+
+def get_standard_deviation(face_distances):
+    # Calculate standard deviation
+    standard_deviation = np.std(face_distances)
+
+    return (1 - standard_deviation) * 100
 
 
 if __name__ == '__main__':
@@ -78,34 +85,27 @@ if __name__ == '__main__':
     # 1. Median
     similarity_score_median = get_median(face_distances)
 
-    execution_time = timeit(lambda: get_median(face_distances), number=10)
+    execution_time = timeit(lambda: get_median(face_distances), number=20)
 
+    print('Median')
     print(f'Similarity is {similarity_score_median:.2f}%')
-    print(f'Execution time: {execution_time} seconds')
+    print(f'Execution time: {execution_time} seconds\n')
 
-    # 2.Arithmetic mean
+    # 2. Arithmetic mean
     similarity_score_mean = get_mean(face_distances)
 
-    execution_time = timeit(lambda: get_mean(face_distances), number=10)
+    execution_time = timeit(lambda: get_mean(face_distances), number=20)
 
+    print('Arithmetic mean')
     print(f'Similarity is {similarity_score_mean:.2f}%')
+    print(f'Execution time: {execution_time} seconds\n')
+
+    # 3. Standard deviation
+    similarity_score_sd = get_standard_deviation(face_distances)
+
+    execution_time = timeit(
+        lambda: get_standard_deviation(face_distances), number=20)
+
+    print('Standard deviation')
+    print(f'Similarity is {similarity_score_sd}%')
     print(f'Execution time: {execution_time} seconds')
-
-    # 3.Manhattan distance
-
-
-    # 4.Euclidean distance
-
-
-    # 5.Cosine distance
-
-
-    # 6.Pearson Correlation Coefficient
-
-
-    # 7.Histogram similarity
-
-
-    # 8.Support Vector Machine, SVM
-
-    
