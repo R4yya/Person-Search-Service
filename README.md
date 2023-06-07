@@ -1,1 +1,2 @@
 # Person-Search-Service
+This is my solution for developing a service to search for a person in the database by photo. The main task is to develop a service that can be replenished with objects, for further search of this object, using photos. The quality of the search and the confidence of the service in the correctness of the found object is critical. It will be the confidence of the service that will be evaluated. The secondary metrics will be the search speed. The service should be able to process photos that contain several people.
