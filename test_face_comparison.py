@@ -11,7 +11,7 @@ def load_images(image_format='.jpg'):
     image_1 = face_recognition.load_image_file(
         f'{project_path}\\img\\durov{image_format}')
     image_2 = face_recognition.load_image_file(
-        f'{project_path}\\img\\test_durov_1{image_format}')
+        f'{project_path}\\img\\gates{image_format}')
 
     return image_1, image_2
 
@@ -91,7 +91,7 @@ def get_face_recognition_accuracy(face_distance, face_match_threshold=0.6):
 def match_percentage(face_distance):
     face_match_percentage = (1 - face_distances) * 100
     for i, face_distance in enumerate(face_distances):
-        print(f'The test image has a distance of {face_distance:.2} from known image #{i}')
+        print(f'The test image has a distance of {face_distance} from known image #{i}')
 
         print(f'- comparing with a tolerance of 0.6? {face_distance < 0.6}')
 
@@ -102,7 +102,7 @@ def face_distance_to_similarity(face_distance, face_match_threshold=0.6):
     similarity = 1 - (face_distance - face_match_threshold) / \
         (1 - face_match_threshold)
     similarity = np.clip(similarity, 0, 1)  # limit in range [0, 1]
-    similarity_percent = similarity * 100
+    similarity_percent = np.mean(similarity * 100)
 
     return similarity_percent
 
@@ -124,12 +124,6 @@ if __name__ == '__main__':
     # Print face distances
     print(f'{face_distances}\n')
 
-    similarities = get_face_recognition_accuracy(face_distances)
+    similarities = face_distance_to_similarity(face_distances)
 
     print(f'{similarities}\n')
-
-    average_similarity = np.mean(similarities)
-    similarity_percent = average_similarity * 100
-
-    print('face_recognition wikis solution')
-    print(f'Similarity is {similarity_percent}%')
