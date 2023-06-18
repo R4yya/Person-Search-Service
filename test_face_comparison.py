@@ -3,15 +3,15 @@ import numpy as np
 from convert_image_to_bytes import get_project_path
 
 
-def load_images(image_format='.jpg'):
+def load_images(img_1, img_2, image_format='.jpg'):
     # Аbsolute path of the project
     project_path = get_project_path()
 
     # Load image
     image_1 = face_recognition.load_image_file(
-        f'{project_path}\\img\\test_me_1{image_format}')
+        f'{project_path}\\img\\{img_1}{image_format}')
     image_2 = face_recognition.load_image_file(
-        f'{project_path}\\img\\test_me_2{image_format}')
+        f'{project_path}\\img\\{img_2}{image_format}')
 
     return image_1, image_2
 
@@ -127,7 +127,7 @@ def calculate_similarity_percentage_4(face_distances):
 
 if __name__ == '__main__':
     # Load images get face encodings and distances
-    image_1, image_2 = load_images()
+    image_1, image_2 = load_images('test_durov_1', 'test_durov_2')
     face_encoding_1, face_encoding_2 = get_face_encodings(image_1, image_2)
     face_distances = get_face_distances(face_encoding_1, face_encoding_2)
 
