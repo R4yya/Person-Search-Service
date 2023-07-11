@@ -168,8 +168,8 @@ haar_cascades/
 # Test images
 img/test_*.jpg
 
-# Test images converted to bin
-img_bytes/test_*.bin
+# Images converted to bin
+img_bytes/
 
 #Qt Designer files
 Qt_ui/
