@@ -10,10 +10,10 @@ def initialize_database_session():
     uri = f'postgresql://{username}:{password}@localhost:5432/person_search'
 
     # Create an instance of the DatabaseSession
-    db_session = DatabaseSession(uri)
+    db_connection = DatabaseSession(uri)
 
     # Get session from DatabaseSession
-    session = db_session.get_session()
+    session = db_connection.get_session()
 
     return session
 
@@ -47,8 +47,8 @@ if __name__ == '__main__':
             'photo': get_bytes_from_file('durov.bin')
         },
         {
-            'first_name': 'Gates',
-            'last_name': 'William',
+            'first_name': 'William',
+            'last_name': 'Gates',
             'patronymic': None,
             'birthdate': '1955-10-28',
             'country': 'USA',
