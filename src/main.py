@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets
 from os.path import join as os_join, dirname
 import sys
 from ui.dbConnectionWindow import DbConnectionWindow
-from db_operator.databaseSession import DatabaseSession
+from db_operator.databaseOperator import DatabaseOperator
 from models.tablesModels import PersonsModel
 
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
 
     db_connection_window = DbConnectionWindow(
-        DatabaseSession(), PersonsModel)
+        DatabaseOperator(), PersonsModel)
     db_connection_window.show()
 
     sys.exit(app.exec())
