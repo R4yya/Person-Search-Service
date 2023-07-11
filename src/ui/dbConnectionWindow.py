@@ -1,18 +1,22 @@
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import QMainWindow
+from ui.mainWindow import MainWindow
 from json import dump, load
 from os.path import dirname, join as os_join
 
 
 class DbConnectionWindow(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, DatabaseSession, PersonsModel, parent=None):
         super().__init__(parent)
         self.setup_ui()
+        self.retranslate_ui()
         self.read_from_json()
+        self.db_connection = DatabaseSession
+        self.PersonsModel = PersonsModel
 
     def setup_ui(self):
         self.setObjectName('MainWindow')
-        self.setFixedSize(320, 200)
+        self.setFixedSize(320, 210)
 
         self.central_widget = QtWidgets.QWidget(self)
         self.central_widget.setObjectName('central_widget')
@@ -29,9 +33,9 @@ class DbConnectionWindow(QMainWindow):
         self.passLabel.setObjectName('passLabel')
         self.gridLayout.addWidget(self.passLabel, 1, 0, 1, 1)
 
-        self.portLabel = QtWidgets.QLabel(self.central_widget)
-        self.portLabel.setObjectName('portLabel')
-        self.gridLayout.addWidget(self.portLabel, 2, 0, 1, 1)
+        self.hostLabel = QtWidgets.QLabel(self.central_widget)
+        self.hostLabel.setObjectName('hostLabel')
+        self.gridLayout.addWidget(self.hostLabel, 2, 0, 1, 1)
 
         self.databaseLabel = QtWidgets.QLabel(self.central_widget)
         self.databaseLabel.setObjectName('databaseLabel')
@@ -46,9 +50,9 @@ class DbConnectionWindow(QMainWindow):
         self.passLineEdit.setObjectName('passLineEdit')
         self.gridLayout.addWidget(self.passLineEdit, 1, 1, 1, 1)
 
-        self.portLineEdit = QtWidgets.QLineEdit(self.central_widget)
-        self.portLineEdit.setObjectName('portLineEdit')
-        self.gridLayout.addWidget(self.portLineEdit, 2, 1, 1, 1)
+        self.hostLineEdit = QtWidgets.QLineEdit(self.central_widget)
+        self.hostLineEdit.setObjectName('hostLineEdit')
+        self.gridLayout.addWidget(self.hostLineEdit, 2, 1, 1, 1)
 
         self.databaseLineEdit = QtWidgets.QLineEdit(self.central_widget)
         self.databaseLineEdit.setObjectName('databaseLineEdit')
@@ -60,7 +64,7 @@ class DbConnectionWindow(QMainWindow):
 
         self.connectButton = QtWidgets.QPushButton(self.central_widget)
         self.connectButton.setObjectName('connectButton')
-        self.connectButton.clicked.connect(self.remember_me)
+        self.connectButton.clicked.connect(self.connect_to_db)
         self.gridLayout.addWidget(self.connectButton, 6, 2, 1, 1)
 
         self.clearButton = QtWidgets.QPushButton(self.central_widget)
@@ -68,16 +72,14 @@ class DbConnectionWindow(QMainWindow):
         self.clearButton.clicked.connect(self.clear_edits)
         self.gridLayout.addWidget(self.clearButton, 5, 2, 1, 1)
 
-        self.retranslate_ui()
-
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate(
-            'MainWindow', 'Connect to database'))
+
+        self.setWindowTitle(_translate('MainWindow', 'Connect to database'))
 
         self.usernameLabel.setText(_translate('MainWindow', 'Unsername:'))
         self.passLabel.setText(_translate('MainWindow', 'Password:'))
-        self.portLabel.setText(_translate('MainWindow', 'Port:'))
+        self.hostLabel.setText(_translate('MainWindow', 'host:'))
         self.databaseLabel.setText(_translate('MainWindow', 'Database:'))
         self.checkBox.setText(_translate('MainWindow', 'Remember me'))
         self.connectButton.setText(_translate('MainWindow', 'Connect'))
@@ -86,7 +88,7 @@ class DbConnectionWindow(QMainWindow):
     def clear_edits(self):
         self.usernameLineEdit.clear()
         self.passLineEdit.clear()
-        self.portLineEdit.clear()
+        self.hostLineEdit.clear()
         self.databaseLineEdit.clear()
 
     def get_json_path(self):
@@ -102,7 +104,7 @@ class DbConnectionWindow(QMainWindow):
         data = {
             'username': self.usernameLineEdit.text(),
             'password': self.passLineEdit.text(),
-            'port': self.portLineEdit.text(),
+            'host': self.hostLineEdit.text(),
             'database': self.databaseLineEdit.text()
         }
 
@@ -119,16 +121,30 @@ class DbConnectionWindow(QMainWindow):
 
         self.usernameLineEdit.setText(connection_pref_dict['username'])
         self.passLineEdit.setText(connection_pref_dict['password'])
-        self.portLineEdit.setText(connection_pref_dict['port'])
+        self.hostLineEdit.setText(connection_pref_dict['host'])
         self.databaseLineEdit.setText(connection_pref_dict['database'])
 
     def get_uri(self):
         username = self.usernameLineEdit.text()
         password = self.passLineEdit.text()
-        port = self.portLineEdit.text()
+        host = self.hostLineEdit.text()
         database = self.databaseLineEdit.text()
 
-        return f'postgresql://{username}:{password}@localhost:{port}/{database}'
+        return f'postgresql://{username}:{password}@localhost:{host}/{database}'
+
+    def raise_main_window(self, session, PersonsModel):
+        self.hide()
+        self.main_window = MainWindow(session, PersonsModel)
+        self.main_window.show()
+
+    def connect_to_db(self):
+        self.remember_me()
+
+        uri = self.get_uri()
+        self.db_connection.setup_session(uri)
+        session = self.db_connection.get_session()
+
+        self.raise_main_window(session, self.PersonsModel)
 
 
 if __name__ == '__main__':
@@ -138,6 +154,7 @@ if __name__ == '__main__':
 
     db_connection_window = DbConnectionWindow()
     db_connection_window.show()
-    print(db_connection_window.get_uri())
+    # print(db_connection_window.get_uri())
+    # print(sys.path)
 
     sys.exit(app.exec())
