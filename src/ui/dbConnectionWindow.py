@@ -6,12 +6,15 @@ from os.path import dirname, join as os_join
 
 
 class DbConnectionWindow(QMainWindow):
-    def __init__(self, DatabaseSession, PersonsModel, parent=None):
+    def __init__(self,
+                 DatabaseOperator,
+                 PersonsModel,
+                 parent=None):
         super().__init__(parent)
         self.setup_ui()
         self.retranslate_ui()
         self.read_from_json()
-        self.db_connection = DatabaseSession
+        self.db_operator = DatabaseOperator
         self.PersonsModel = PersonsModel
 
     def setup_ui(self):
@@ -62,15 +65,15 @@ class DbConnectionWindow(QMainWindow):
         self.checkBox.setObjectName('checkBox')
         self.gridLayout.addWidget(self.checkBox, 4, 0, 1, 2)
 
-        self.connectButton = QtWidgets.QPushButton(self.central_widget)
-        self.connectButton.setObjectName('connectButton')
-        self.connectButton.clicked.connect(self.connect_to_db)
-        self.gridLayout.addWidget(self.connectButton, 6, 2, 1, 1)
-
         self.clearButton = QtWidgets.QPushButton(self.central_widget)
         self.clearButton.setObjectName('clearButton')
         self.clearButton.clicked.connect(self.clear_edits)
         self.gridLayout.addWidget(self.clearButton, 5, 2, 1, 1)
+
+        self.connectButton = QtWidgets.QPushButton(self.central_widget)
+        self.connectButton.setObjectName('connectButton')
+        self.connectButton.clicked.connect(self.connect_to_db)
+        self.gridLayout.addWidget(self.connectButton, 6, 2, 1, 1)
 
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
@@ -132,19 +135,23 @@ class DbConnectionWindow(QMainWindow):
 
         return f'postgresql://{username}:{password}@localhost:{host}/{database}'
 
-    def raise_main_window(self, session, PersonsModel):
+    def raise_main_window(self,
+                          session,
+                          PersonsModel):
         self.hide()
-        self.main_window = MainWindow(session, PersonsModel)
+        self.main_window = MainWindow(session,
+                                      PersonsModel)
         self.main_window.show()
 
     def connect_to_db(self):
         self.remember_me()
 
         uri = self.get_uri()
-        self.db_connection.setup_session(uri)
-        session = self.db_connection.get_session()
+        self.db_operator.setup_session(uri)
+        session = self.db_operator.get_session()
 
-        self.raise_main_window(session, self.PersonsModel)
+        self.raise_main_window(session,
+                               self.PersonsModel)
 
 
 if __name__ == '__main__':
