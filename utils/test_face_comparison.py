@@ -127,7 +127,7 @@ def calculate_similarity_percentage_4(face_distances):
 
 if __name__ == '__main__':
     # Load images get face encodings and distances
-    image_1, image_2 = load_images('test_durov_1', 'test_durov_2')
+    image_1, image_2 = load_images('test_me_1', 'test_durov_3')
     face_encoding_1, face_encoding_2 = get_face_encodings(image_1, image_2)
     face_distances = get_face_distances(face_encoding_1, face_encoding_2)
 
