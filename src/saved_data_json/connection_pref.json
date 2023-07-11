@@ -1,1 +1,1 @@
-{"username": "postgres", "password": "AHfGx9_rNaXgyAYZr", "port": "5432", "database": "person_search"}
+{"username": "postgres", "password": "AHfGx9_rNaXgyAYZr", "host": "5432", "database": "person_search"}
