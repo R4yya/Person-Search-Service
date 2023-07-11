@@ -170,3 +170,6 @@ img/test_*.jpg
 
 # Test images converted to bin
 img_bytes/test_*.bin
+
+#Qt Designer files
+Qt_ui/
