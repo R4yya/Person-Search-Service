@@ -46,83 +46,83 @@ def get_face_distances(face_encoding_1, face_encoding_2):
     return face_distances
 
 
-def get_median(face_distances):
-    # Calculate median of face_distances array
-    median = np.median(face_distances)
+# def get_median(face_distances):
+#     # Calculate median of face_distances array
+#     median = np.median(face_distances)
 
-    return median
-
-
-def get_mean(face_distances):
-    # Calculate arithmetic mean
-    mean = np.mean(face_distances)
-
-    return mean
+#     return median
 
 
-def get_standard_deviation(face_distances):
-    # Calculate standard deviation
-    standard_deviation = np.std(face_distances)
+# def get_mean(face_distances):
+#     # Calculate arithmetic mean
+#     mean = np.mean(face_distances)
 
-    return standard_deviation
-
-
-def get_face_recognition_accuracy(face_distances, face_match_threshold=0.6):
-    # face_recognition wikis modified solution
-    # https://github.com/ageitgey/face_recognition/wiki/Calculating-Accuracy-as-a-Percentage
-    # which is quite similar to face_recognition.compare_faces but returns a sigle value
-    confidences = []
-    for distance in np.nditer(face_distances):
-        if distance > face_match_threshold:
-            match_threshold_range = (1.0 - face_match_threshold)
-            linear_val = (1.0 - distance) / (match_threshold_range * 2.0)
-            confidence = linear_val
-
-            return linear_val
-        else:
-            match_threshold_range = face_match_threshold
-            linear_val = 1.0 - (distance / (match_threshold_range * 2.0))
-            confidence = linear_val + \
-                ((1.0 - linear_val) * ((linear_val - 0.5) * 2) ** 0.2)
-        confidences.append(confidence)
-    return np.array(confidences)
+#     return mean
 
 
-def match_percentage(face_distances):
-    face_match_percentage = (1 - face_distances[0]) * 100
-    for i, face_distances in enumerate(face_distances):
-        print(
-            f'The test image has a distance of {face_distances} from known image #{i}')
+# def get_standard_deviation(face_distances):
+#     # Calculate standard deviation
+#     standard_deviation = np.std(face_distances)
 
-        print(f'- comparing with a tolerance of 0.6? {face_distances < 0.6}')
-
-        print(np.round(face_match_percentage, 4))  # upto 4 decimal places
+#     return standard_deviation
 
 
-def calculate_similarity_percentage_1(face_distances, face_match_threshold=0.6):
-    similarity = 1 - (face_distances - face_match_threshold) / \
-        (1 - face_match_threshold)
-    similarity = np.clip(similarity, 0, 1)  # limit in range [0, 1]
-    similarity_percentage = np.mean(similarity * 100)
+# def get_face_recognition_accuracy(face_distances, face_match_threshold=0.6):
+#     # face_recognition wikis modified solution
+#     # https://github.com/ageitgey/face_recognition/wiki/Calculating-Accuracy-as-a-Percentage
+#     # which is quite similar to face_recognition.compare_faces but returns a sigle value
+#     confidences = []
+#     for distance in np.nditer(face_distances):
+#         if distance > face_match_threshold:
+#             match_threshold_range = (1.0 - face_match_threshold)
+#             linear_val = (1.0 - distance) / (match_threshold_range * 2.0)
+#             confidence = linear_val
 
-    return similarity_percentage
+#             return linear_val
+#         else:
+#             match_threshold_range = face_match_threshold
+#             linear_val = 1.0 - (distance / (match_threshold_range * 2.0))
+#             confidence = linear_val + \
+#                 ((1.0 - linear_val) * ((linear_val - 0.5) * 2) ** 0.2)
+#         confidences.append(confidence)
+#     return np.array(confidences)
 
 
-def calculate_similarity_percentage_2(face_distances, threshold=0.6):
-    normalized_distances = [(d - min(face_distances)) /
-                            (max(face_distances) - min(face_distances)) for d in face_distances]
-    similarity_count = sum(1 for d in normalized_distances if d < threshold)
-    similarity_percentage = (similarity_count / len(face_distances)) * 100
+# def match_percentage(face_distances):
+#     face_match_percentage = (1 - face_distances[0]) * 100
+#     for i, face_distances in enumerate(face_distances):
+#         print(
+#             f'The test image has a distance of {face_distances} from known image #{i}')
 
-    return similarity_percentage
+#         print(f'- comparing with a tolerance of 0.6? {face_distances < 0.6}')
 
-
-def calculate_similarity_percentage_3(face_distances):
-    return np.mean(np.exp(-10 * face_distances))
+#         print(np.round(face_match_percentage, 4))  # upto 4 decimal places
 
 
-def calculate_similarity_percentage_4(face_distances):
-    return 1 / (1 + face_distances)
+# def calculate_similarity_percentage_1(face_distances, face_match_threshold=0.6):
+#     similarity = 1 - (face_distances - face_match_threshold) / \
+#         (1 - face_match_threshold)
+#     similarity = np.clip(similarity, 0, 1)  # limit in range [0, 1]
+#     similarity_percentage = np.mean(similarity * 100)
+
+#     return similarity_percentage
+
+
+# def calculate_similarity_percentage_2(face_distances, threshold=0.6):
+#     normalized_distances = [(d - min(face_distances)) /
+#                             (max(face_distances) - min(face_distances)) for d in face_distances]
+#     similarity_count = sum(1 for d in normalized_distances if d < threshold)
+#     similarity_percentage = (similarity_count / len(face_distances)) * 100
+
+#     return similarity_percentage
+
+
+# def calculate_similarity_percentage_3(face_distances):
+#     return np.mean(np.exp(-10 * face_distances))
+
+
+# def calculate_similarity_percentage_4(face_distances):
+#     return 1 / (1 + face_distances)
 
 
 if __name__ == '__main__':
@@ -141,5 +141,3 @@ if __name__ == '__main__':
 
     # Print face distances
     print(f'{face_distances}\n')
-
-    print(calculate_similarity_percentage_3(face_distances))
