@@ -28,6 +28,6 @@ class FaceDataModel(BaseModel):
     person_id = Column(Integer, ForeignKey(
         'persons.identifier'), nullable=False)
     encoding = Column(ARRAY(REAL), nullable=False)
-    location = Column(ARRAY(Integer, as_tuple=True), nullable=False)
+    location = Column(ARRAY(Integer), nullable=False)
 
     person = relationship('PersonsModel', back_populates='face_encodings')
