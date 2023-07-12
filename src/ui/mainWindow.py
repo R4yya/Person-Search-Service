@@ -1,18 +1,23 @@
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import QMainWindow
 from ui.addRecordWindow import AddRecordWindow
+from ui.findPersonWindow import FindPersonWindow
 
 
 class MainWindow(QMainWindow):
     def __init__(self,
                  session,
                  PersonsModel,
+                 FaceDataModel,
+                 PhotoHandler,
                  parent=None):
         super().__init__(parent)
-        self.session = session
-        self.persons = PersonsModel
         self.setup_ui()
         self.retranslate_ui()
+        self.session = session
+        self.PersonsModel = PersonsModel
+        self.FaceDataModel = FaceDataModel
+        self.photo_handler = PhotoHandler
 
     def setup_ui(self):
         self.setObjectName('MainWindow')
@@ -24,10 +29,10 @@ class MainWindow(QMainWindow):
         self.gridLayout = QtWidgets.QGridLayout(self.central_widget)
         self.gridLayout.setObjectName('gridLayout_edits')
 
-        self.printButton = QtWidgets.QPushButton(self.central_widget)
-        self.printButton.setObjectName('printButton')
-        self.printButton.clicked.connect(self.print_all)
-        self.gridLayout.addWidget(self.printButton, 0, 0, 1, 1)
+        self.findButton = QtWidgets.QPushButton(self.central_widget)
+        self.findButton.setObjectName('findButton')
+        self.findButton.clicked.connect(self.raise_find_person_window)
+        self.gridLayout.addWidget(self.findButton, 0, 0, 1, 1)
 
         self.addRecordButton = QtWidgets.QPushButton(self.central_widget)
         self.addRecordButton.setObjectName('addRecordButton')
@@ -39,18 +44,23 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle(_translate('MainWindow', 'Main'))
 
-        self.printButton.setText(_translate('MainWindow', 'Print'))
-        self.addRecordButton.setText( _translate('MainWindow', 'Add new record'))
+        self.findButton.setText(_translate('MainWindow', 'Find'))
+        self.addRecordButton.setText(_translate('MainWindow', 'Add new record'))
 
-    def print_all(self):
-        persons = self.session.query(self.persons).all()
-        for person in persons:
-            print(person.first_name)
+    def raise_find_person_window(self):
+        self.find_person_window = FindPersonWindow(self.session,
+                                                   self.PersonsModel,
+                                                   self.FaceDataModel,
+                                                   self.photo_handler)
+        self.find_person_window.show()
 
     def raise_add_record_window(self):
-        self.hide()
+        # self.hide()
 
-        self.add_record_window = AddRecordWindow()
+        self.add_record_window = AddRecordWindow(self.session,
+                                                 self.PersonsModel,
+                                                 self.FaceDataModel,
+                                                 self.photo_handler)
         self.add_record_window.show()
 
 
