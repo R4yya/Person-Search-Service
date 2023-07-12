@@ -7,18 +7,22 @@ from os.path import dirname, join as os_join
 
 class DbConnectionWindow(QMainWindow):
     def __init__(self,
-                 DatabaseOperator,
+                 DatabaseSession,
                  PersonsModel,
+                 FaceDataModel,
+                 PhotoHandler,
                  parent=None):
         super().__init__(parent)
         self.setup_ui()
         self.retranslate_ui()
         self.read_from_json()
-        self.db_operator = DatabaseOperator
+        self.db_session = DatabaseSession
         self.PersonsModel = PersonsModel
+        self.FaceDataModel = FaceDataModel
+        self.photo_handler = PhotoHandler
 
     def setup_ui(self):
-        self.setObjectName('MainWindow')
+        self.setObjectName('DbConnectionWindow')
         self.setFixedSize(320, 210)
 
         self.central_widget = QtWidgets.QWidget(self)
@@ -78,15 +82,15 @@ class DbConnectionWindow(QMainWindow):
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
 
-        self.setWindowTitle(_translate('MainWindow', 'Connect to database'))
+        self.setWindowTitle(_translate('DbConnectionWindow', 'Connect to database'))
 
-        self.usernameLabel.setText(_translate('MainWindow', 'Unsername:'))
-        self.passLabel.setText(_translate('MainWindow', 'Password:'))
-        self.hostLabel.setText(_translate('MainWindow', 'host:'))
-        self.databaseLabel.setText(_translate('MainWindow', 'Database:'))
-        self.checkBox.setText(_translate('MainWindow', 'Remember me'))
-        self.connectButton.setText(_translate('MainWindow', 'Connect'))
-        self.clearButton.setText(_translate('MainWindow', 'Clear'))
+        self.usernameLabel.setText(_translate('DbConnectionWindow', 'Unsername:'))
+        self.passLabel.setText(_translate('DbConnectionWindow', 'Password:'))
+        self.hostLabel.setText(_translate('DbConnectionWindow', 'host:'))
+        self.databaseLabel.setText(_translate('DbConnectionWindow', 'Database:'))
+        self.checkBox.setText(_translate('DbConnectionWindow', 'Remember me'))
+        self.connectButton.setText(_translate('DbConnectionWindow', 'Connect'))
+        self.clearButton.setText(_translate('DbConnectionWindow', 'Clear'))
 
     def clear_edits(self):
         self.usernameLineEdit.clear()
@@ -137,21 +141,27 @@ class DbConnectionWindow(QMainWindow):
 
     def raise_main_window(self,
                           session,
-                          PersonsModel):
+                          PersonsModel,
+                          FaceDataModel,
+                          PhotoHandler):
         self.hide()
         self.main_window = MainWindow(session,
-                                      PersonsModel)
+                                      PersonsModel,
+                                      FaceDataModel,
+                                      PhotoHandler)
         self.main_window.show()
 
     def connect_to_db(self):
         self.remember_me()
 
         uri = self.get_uri()
-        self.db_operator.setup_session(uri)
-        session = self.db_operator.get_session()
+        self.db_session.setup_session(uri)
+        session = self.db_session.get_session()
 
         self.raise_main_window(session,
-                               self.PersonsModel)
+                               self.PersonsModel,
+                               self.FaceDataModel,
+                               self.photo_handler)
 
 
 if __name__ == '__main__':
@@ -161,7 +171,5 @@ if __name__ == '__main__':
 
     db_connection_window = DbConnectionWindow()
     db_connection_window.show()
-    # print(db_connection_window.get_uri())
-    # print(sys.path)
 
     sys.exit(app.exec())
