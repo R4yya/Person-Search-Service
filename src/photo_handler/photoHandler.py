@@ -51,11 +51,11 @@ class PhotoHandler(object):
         target_encoding = self.get_face_encodings(target_image, target_locations)[0]
 
         face_encodings = [face_data.encoding for face_data in all_face_data]
-        face_identifiers = [face_data.person_id for face_data in all_face_data]
+        face_person_ids = [face_data.person_id for face_data in all_face_data]
 
         similarities = fr.compare_faces(np.array(face_encodings),
                                         np.array(target_encoding))
 
-        similar_face_identifiers = [face_identifiers[i] for i, is_similar in enumerate(similarities) if is_similar]
+        similar_face_person_ids = [face_person_ids[i] for i, is_similar in enumerate(similarities) if is_similar]
 
-        return similar_face_identifiers
+        return similar_face_person_ids
