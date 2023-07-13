@@ -166,7 +166,7 @@ cython_debug/
 haar_cascades/
 
 # Test images
-img/test_*.jpg
+img/persons
 
 # Images converted to bin
 img_bytes/
