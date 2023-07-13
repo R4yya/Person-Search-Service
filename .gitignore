@@ -165,8 +165,8 @@ cython_debug/
 # Haar cascades xmls from cv2 data folder
 haar_cascades/
 
-# Test images
-img/persons
+# Images\icons
+img/
 
 # Images converted to bin
 img_bytes/
